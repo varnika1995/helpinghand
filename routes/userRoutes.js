@@ -164,6 +164,7 @@ router.put('/addMoney/:id/:balance', (req, res) => {
                 $set: { "balance":"balance"+$ }
             }, (err, data) => {
                 console.log(data)
+                
                 if (err) {
                     return res.status(200).json({
                         statusCode: 400,
