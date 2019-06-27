@@ -5,6 +5,7 @@ let adminSchema=new Schema({
 
     email:String,
     password:String,
+    salt:String,
     createdAt:{type:Date, default:Date.now()}
 })
 
