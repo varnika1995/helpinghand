@@ -62,29 +62,7 @@ router.post('/register', validators.registerReqValidator
                         data: data
 
                     })
-                    donation.updateOne({
-                        donerId: payLoad.id,
-                    },
-    
-                        {
-                            $set: { "balance": "balance"+$ }
-                        },
-    
-                        (error, data1) => {
-                            if (error) {
-                                res.status(200).json({
-                                    statusCode: 400,
-                                    message: "user not found",
-    
-                                })
-                            }
-                            return res.status(200).json({
-                                statusCode: 200,
-                                message: "sucess",
-                                data: data
-                            })
                     
-                        })
                 })
 
             })
@@ -204,6 +182,29 @@ router.post('/addMoney', (req, res) => {
                     })
                     
                 }
+                donation.updateOne({
+                    donerId: payLoad.id,
+                },
+
+                    {
+                        $set: { "balance": "balance"+$ }
+                    },
+
+                    (error, data1) => {
+                        if (error) {
+                            res.status(200).json({
+                                statusCode: 400,
+                                message: "user not found",
+
+                            })
+                        }
+                        return res.status(200).json({
+                            statusCode: 200,
+                            message: "sucess",
+                            data: data
+                        })
+                
+                    })
             
             })
         })
