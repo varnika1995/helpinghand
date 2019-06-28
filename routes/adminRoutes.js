@@ -180,7 +180,7 @@ router.get('/getDonerInfo', (req, res) => {
 
 //add ngo
 
-router.post('/addNGO',validators.addngoReqValidator
+router.post('/addNGO', validators.addngoReqValidator
     , (req, res) => {
         try {
             let payLoad = req.body

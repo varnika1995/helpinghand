@@ -5,12 +5,14 @@ const validators = require('../validators/userValidator')
 const functions = require('../function');
 const doner = require('../models/doner');
 const NGO = require('../models/NGO');
-//const donateMoney=require('../donateMoney')
+//sconst donation=require('../donation')
 
 //doner registration 
 
-router.post('/register',validators.registerReqValidator     
-  , (req, res) => {
+
+
+router.post('/register', validators.registerReqValidator
+    , (req, res) => {
         try {
             let payLoad = req.body
             doner.findOne({ email: payLoad.email }, (err, data) => {
@@ -23,7 +25,7 @@ router.post('/register',validators.registerReqValidator
                 }
                 if (data) {
                     return res.status(200).json({
-                        statusCode: 400,
+                        statusCode: 401,
                         message: "user  already exist",
                         data: {}
                     })
@@ -47,7 +49,7 @@ router.post('/register',validators.registerReqValidator
                     }
                     if (!data) {
                         return res.status(200).json({
-                            statusCode: 400,
+                            statusCode: 402,
                             message: "user not found",
                             data: {}
                         })
@@ -55,7 +57,7 @@ router.post('/register',validators.registerReqValidator
                     }
 
                     return res.status(200).json({
-                        statusCode: 400,
+                        statusCode: 200,
                         message: "sucess",
                         data: data
 
@@ -80,7 +82,7 @@ router.post('/register',validators.registerReqValidator
 
 //doner login
 
-router.post('/login',validators.loginReqValidator, (req, res) => {
+router.post('/login', validators.loginReqValidator, (req, res) => {
     try {
         console.log('11111111')
         let payLoad = req.body
@@ -96,7 +98,7 @@ router.post('/login',validators.loginReqValidator, (req, res) => {
             }
             if (!data) {
                 return res.status(200).json({
-                    statusCode: 400,
+                    statusCode: 401,
                     message: "user not found",
                     data: {}
                 })
@@ -137,50 +139,62 @@ router.post('/login',validators.loginReqValidator, (req, res) => {
 
 
 //add money
-router.put('/addMoney/:id/:balance', (req, res) => {
-    let payLoad = req.body
-    console.log('11111111111')
-    //let balance=0
-    /*doner.findOne({ id: payLoad.id }, (err, data) => {
-        if (err) {
-            return res.status(200).json({
-                statusCode: 400,
-                message: "somthing went wrong",
-                data: {}
-            })
-        }
-        if (!data) {
-            return res.status(200).json({
-                statusCode: 400,
-                message: "somthing went wrong",
-                data: {}
-            })
-        }*/
-        NGO.updateOne({
-            _id: mongodb.ObjectID(req.params.id),
-            "balance": req.params.balance
-        },
-            {
-                $set: { "balance":"balance"+$ }
-            }, (err, data) => {
+
+router.post('/addMoney', (req, res) => {
+    try{
+        console.log('111111')
+        let payLoad=req.body
+        doner.findOne({ donerId: payLoad.id }, (err, data) => {
+            console.log(data)
+            if (err) {
+                return res.status(200).json({
+                    statusCode: 400,
+                    message: "somthing went wrong",
+                    data: {}
+                })
+            }
+            if (!data) {
+                return res.status(200).json({
+                    statusCode: 400,
+                    message: "doner not exist",
+                    data: {}
+                })
+            }
+
+            NGO.findOne({ngoId:payLoad.id},(err,data)=>{
                 console.log(data)
-                
-                if (err) {
+                if(err)
+                {
                     return res.status(200).json({
                         statusCode: 400,
                         message: "somthing went wrong",
                         data: {}
-                    })
+                    })                
+    
                 }
-                return res.status(200).json({
-                    statusCode: 400,
-                    message: "update sucessfully",
-                    data: data
-                })
+                id(!data)
+                {
+                    return res.status(200).json({
+                        statusCode: 400,
+                        message: "ngo not exist",
+                        data: {}
+                    })
+                    
+                }
             })
-    })
+        })
+      
 
-//})
 
+    }catch(err)
+    {
+        res.status(200).json({
+            statusCode: 400,
+            message: "somthing went wrong",
+            data: {}
+        })
 
+    }
+})
+    
 module.exports = router

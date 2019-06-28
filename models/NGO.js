@@ -1,16 +1,16 @@
-const mongoose=require('mongoose')
-const Schema=mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
-let NGOSchema=new Schema({
-    name:String,
-    address:String,
-    email:String,
-    password:String,
-    contact:String,
-    balance:String,
-    salt:String,
-    createdAt:{type:Date, default:Date.now()}
+let NGOSchema = new Schema({
+    name: String,
+    address: String,
+    email: String,
+    password: String,
+    contact: String,
+    balance: String,
+    salt: String,
+    createdAt: { type: Date, default: Date.now() }
 })
 
 
-module.exports=mongoose.model('NGO',NGOSchema)
+module.exports = mongoose.model('NGO', NGOSchema)
