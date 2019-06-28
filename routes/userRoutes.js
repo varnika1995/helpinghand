@@ -4,6 +4,7 @@ const { celebrate, Joi } = require('celebrate')
 const validators = require('../validators/userValidator')
 const functions = require('../function');
 const doner = require('../models/doner');
+const Donation = require('../models/donation');
 const NGO = require('../models/NGO');
 const mongoose = require('mongoose');
 
@@ -161,7 +162,7 @@ router.post('/addMoney', async (req, res) => {
 
         }
 
-        let donationData = await doner.create(payload);
+        let donationData = await Donation.create(payload);
         if (!donationData) {
             return res.status(200).json({
                 statusCode: 400,
