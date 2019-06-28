@@ -1,20 +1,17 @@
-const mongoose=require('mongoose')
-const Schema=mongoose.Schema
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 
-let MoneySchema=new Schema({
+let DonationSchema = new Schema({
+    donerId: String,
+    donerName: String,
+    ngoId: String,
+    ngoName: String,
+    email: String,
+    amount: String,
+    reference: String,
+    createdAt: { type: Date, default: Date.now() }
 
-   /* donerId:String,
-    donerName:String,
-    ngoId:String,
-    ngoName:String,
-    balance:String,*/
-    id:String,
-    email:String,
-    amount:String,
-    reference:String,
-    createdAt:{type:Date,default:Date.now()}
-    
 })
 
-module.exports=MoneySchema
+module.exports = mongoose.model('donation', DonationSchema);
