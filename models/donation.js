@@ -8,8 +8,8 @@ let DonationSchema = new Schema({
     ngoId: String,
     ngoName: String,
     email: String,
-    amount: String,
-    reference: String,
+    amount: Number,
+   // reference: String,
     createdAt: { type: Date, default: Date.now() }
 
 })

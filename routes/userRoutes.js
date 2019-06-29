@@ -138,89 +138,52 @@ router.post('/login', validators.loginReqValidator, (req, res) => {
 
 //add money
 
-router.post('/addMoney', (req, res) => {
+router.post('/addMoney', async (req, res) => {
     try {
         let payload = req.body
-        let donarData = doner.findOne({ _id: mongoose.Types.ObjectId(payload.donarId) })
-            .then((donarData) => {
-                if (!donarData) {
-                    return res.status(200).json({
-                        statusCode: 400,
-                        message: "doner not exist",
-                        data: {}
-                    })
-                }
-                return donarData;
-            }).catch((err) => {
-                console.error(err);
-                res.status(200).json({
-                    statusCode: 400,
-                    message: "somthing went wrong",
-                    data: {}
-                });
-            });
+        let donarData = await doner.findOne({ _id: mongoose.Types.ObjectId(payload.donerId) });
 
+        if (!donarData) {
+            return res.status(200).json({
+                statusCode: 400,
+                message: "doner not exist",
+                data: {}
+            })
+        }
 
+        let ngoData = await NGO.findOne({ _id: mongoose.Types.ObjectId(payload.ngoId) });
+        console.log(ngoData)
 
-        let ngoData = NGO.findOne({ ngoId: payload.ngoId })
-            .then((data) => {
-                if (!data) {
-                    return res.status(200).json({
-                        statusCode: 400,
-                        message: "ngo not exist",
-                        data: {}
-                    })
-                }
-                return data;
-            }).catch((err) => {
-                console.error(err);
-                res.status(200).json({
-                    statusCode: 400,
-                    message: "somthing went wrong",
-                    data: {}
-                });
+        if (!ngoData) {
+            return res.status(200).json({
+                statusCode: 400,
+                message: "ngo not exist",
+                data: {}
             })
 
-
-        let donationData = Donation.create(payload).then((data) => {
-            if (!data) {
-                return res.status(200).json({
-                    statusCode: 400,
-                    message: "somthing went wrong",
-                    data: {}
-                });
-            }
-            return data;
-        }).catch((err) => {
-            console.error(err);
-            res.status(200).json({
+        }
+        let donationData = await Donation.create(payload);
+        if (!donationData) {
+            return res.status(200).json({
                 statusCode: 400,
-                message: "somthing went wrong",
+                message: "somthing went wrong1",
                 data: {}
             });
-        });
+        }
 
-        let updatedData = NGO.updateOne({ _id: mongoose.Types.ObjectId(payload.ngoId) },
+        let updatedData = await NGO.updateOne({ _id: mongoose.Types.ObjectId(payload.ngoId) },
             {
-                $set: { balance: balance + payload.amount }
+                $set: {balance: parseInt(ngoData.balance) + parseInt(payload.amount) }
             },
-            { new: true })
-            .then((data) => {
-                if (!data) {
-                    return res.status(200).json({
-                        statusCode: 400,
-                        message: "somthing went wrong",
-                        data: {}
-                    })
-                }
-            }).catch((err) => {
-                console.error(err);
-                res.status(200).json({
-                    statusCode: 400,
-                    message: "somthing went wrong",
-                    data: {}
-                });
-            });
+            { new: true });
+
+        if (!updatedData) {
+            return res.status(200).json({
+                statusCode: 400,
+                message: "somthing went wrong2",
+                data: {}
+            })
+        }
 
         return res.status(200).json({
             statusCode: 200,
@@ -231,7 +194,7 @@ router.post('/addMoney', (req, res) => {
     } catch (err) {
         res.status(200).json({
             statusCode: 400,
-            message: "somthing went wrong",
+            message: "somthing went wrong3",
             data: {}
         })
 
