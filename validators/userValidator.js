@@ -7,6 +7,7 @@ const registerReqValidator=celebrate({
         email: Joi.string().required(),
         password: Joi.string().required(),
         contact: Joi.string().required(),
+       // amount: Joi.number().optional()
         
         
     })

@@ -5,6 +5,7 @@ const mongoose = require('mongoose')
 const assert = require('assert')
 const cors=require('cors')
 const path=require('path')
+//const expressOasGenerator = require('express-oas-generator');
 
 const bodyParser = require('body-parser')
 const { errors } = require('celebrate')
@@ -13,6 +14,8 @@ const config = require('./config')
 const routes = require('./routes')
 
 const app = express()
+
+//expressOasGenerator.init(app, {});
 
 app.use(cors())
 app.use(morgan('dev'))

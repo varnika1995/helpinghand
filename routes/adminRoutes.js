@@ -80,7 +80,7 @@ router.post('/register', validators.loginReqValidator
 //admin login
 router.post('/login', validators.loginReqValidator, (req, res) => {
     try {
-
+       console.log('111111')
         let payLoad = req.body
         admin.findOne({ email: payLoad.email }, (err, data) => {
             console.log(data)

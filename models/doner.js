@@ -8,6 +8,7 @@ let DonerSchema=new Schema({
     password:String,
     //birthDate:String,
     contact:String,
+   // amount:Number,
     salt:String,
     createdAt:{type:Date, default:Date.now()}
 })

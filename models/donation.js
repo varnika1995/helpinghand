@@ -3,11 +3,11 @@ const Schema = mongoose.Schema
 
 
 let DonationSchema = new Schema({
-    donerId: String,
+    //donerId: String,
     donerName: String,
-    ngoId: String,
+   // ngoId: String,
     ngoName: String,
-    email: String,
+    //email: String,
     amount: Number,
    // reference: String,
     createdAt: { type: Date, default: Date.now() }
