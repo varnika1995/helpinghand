@@ -12,7 +12,7 @@
   "dependencies": {
     "celebrate": "^10.0.1",
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-oas-generator": "^1.0.7",
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.1",
